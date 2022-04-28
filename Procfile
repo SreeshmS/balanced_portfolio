@@ -1,1 +1,1 @@
-web: gunicorn balancedportfolio.wsgi
+web: gunicorn djangogirls.wsgi
