@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>-->
+</head>
+
+<body>
+
+{% extends 'myapp/main.html' %}
+
+{% block content %}
+<!--  <h4 class="text-center">Equity</h4>-->
+  <div class="content-wrapper">
+    <h4 style="padding-bottom:15px; !important;">
+    <span class="menu-icon">
+      <i class="mdi mdi-dip-switch" style="color: #ffab00;"></i>
+    </span>
+    <b><span class="menu-title">Fixed Income Securities</b>
+    </h4>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card" style="height:115vh;">
+              <div class="card-body">
+                <h4 class="card-title text-center">Bond Prices</h4>
+                <table class="table" style="width:100%;border:2px solid #191c24;background-color:#36454F;">
+                  <tr>
+                    <td style="width:10%;border:2px solid #191c24;color:#FFA500;"></td>
+                    <td style="width:50%;border:2px solid #191c24;color:#FFA500;"><b>Bond</b></td>
+                    <td style="border:2px solid #191c24;color:#FFA500;"><b>LTP</b></td>
+                  </tr>
+                  <tr>
+                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
+                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>US10Y</b></td>
+                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
+                      <span class="menu-icon">
+                          <i class="mdi mdi-arrow-down-bold" style="color: #ff726f;float:left;"></i>
+                      </span>
+                      <b>USD 4.00</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
+                    <td style="width:50%;border:2px solid #191c24;color:#055C9D;color:#EBEBB8;"><b>US5Y</b></td>
+                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
+                      <span class="menu-icon">
+                          <i class="mdi mdi-arrow-up-bold" style="color: #76B947;float:left;"></i>
+                      </span>
+                      <b>USD 2.55</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
+                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>US1Y</b></td>
+                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
+                      <span class="menu-icon">
+                          <i class="mdi mdi-arrow-up-bold" style="color: #76B947;float:left;"></i>
+                      </span>
+                      <b>USD 2.55</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
+                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>EU10Y</b></td>
+                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
+                      <span class="menu-icon">
+                          <i class="mdi mdi-arrow-right-bold" style="color:#FEDE00;float:left;"></i>
+                      </span>
+                      <b>USD 7.32</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
+                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>UK1Y</b></td>
+                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
+                      <span class="menu-icon">
+                          <i class="mdi mdi-arrow-up-bold" style="color: #76B947;float:left;"></i>
+                      </span>
+                      <b>USD 8.96</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
+                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>UK30Y</b></td>
+                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
+                      <span class="menu-icon">
+                          <i class="mdi mdi-arrow-down-bold" style="color: #ff726f;float:left;"></i>
+                      </span>
+                      <b>USD 8.96</b>
+                    </td>
+                  </tr>
+                </table>
+
+                <div class="row" style="margin-bottom:15px;">
+                  <div class="template-demo text-center">
+                    <button type="button" ng-click="getSelected()" class="btn btn-inverse-primary btn-fw" style="min-width:70px;">Add to Portfolio<span class="caret"></span></button>
+                  </div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-12 col-xl-6 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body" style="height:400px;">
+                <h4 class="card-title text-center">Term Structures</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-xl-6 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title text-center">Yields</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-xl-6 grid-margin stretch-card">
+            <div class="card" style="height:400px;">
+              <div class="card-body">
+                <h4 class="card-title text-center">Sensitivities</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-xl-6 grid-margin stretch-card">
+            <div class="card" style="height:400px;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <table class="table" style="width:100%;border:2px solid black;background-color:#36454F;">
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Face Value</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          USD 1.00
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Current Price</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          USD 3.90
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Coupon Rate</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          4%
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Time to Maturity</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          1.5
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Redemption</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          Y
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Effective Return YTD</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          USD 3.90
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div class="col-md-6" style="padding-left:25px;">
+                    <table class="table" style="width:100%;border:2px solid black;background-color:#36454F;">
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">DV01</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          0.21
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Mac D</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          0.92
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Mod D</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          0.87
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Eff D</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          0.82
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Convexity</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          0.46
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="width:60%;border:2px solid #191c24;border-bottom:2px solid #DBE8D8;color:white;">Dur hedge</td>
+                        <td style="width:40%;border:2px solid #191c24;text-align:right;color:white;border-bottom:2px solid #DBE8D8;">
+                          10
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- content-wrapper ends -->
+{% endblock content %}
+</body>
+</html>

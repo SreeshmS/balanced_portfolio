@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.div {
+  height: 300px;
+  width: 30%;
+  border: solid 1px black;
+  display: inline-block
+}
+.active {
+  width: 75%;
+}
+.nonactive {
+  width: 10%;
+}
+.div,
+.active,
+.nonactive {
+  -webkit-transition: width 1s ease-in-out;
+  -moz-transition: width 1s ease-in-out;
+  -o-transition: width 1s ease-in-out;
+  transition: width 1s ease-in-out;
+}
+</style>
+</head>
+<body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div>
+  <div class="div">
+    <button class="toggle">toggle</button>
+  </div>
+  <div style="width:20%;border:1px solid black;display:inline-block;">
+    dfsfsdfs
+  </div>
+  <div style="width:20%;border:1px solid black;display:inline-block;">
+    <button class="toggle">toggle</button>
+  </div>
+</div>
+
+<script>
+$('.toggle').click(function() {
+  $(this)
+    // get div
+    .parent()
+    // remove nonactive class from clicked element
+    .removeClass('nonactive')
+    // toggle active class
+    .toggleClass('active')
+    // get sibling divs
+    .siblings()
+    // remove active class from siblings
+    .removeClass('active')
+    // toggle nonactive class based on the clicked element
+    .toggleClass('nonactive', $(this).parent().is('.active'));
+})
+</script>
+
+</body>
+</html>
