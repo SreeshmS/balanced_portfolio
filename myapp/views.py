@@ -35,7 +35,7 @@ def equity(request):
     return render(request, "myapp/eq.html")
 
 def bond(request):
-    return render(request, "myapp/bond.html")
+    return render(request, "myapp/checkbox.html")
 
 def risk(request):
     return render(request, "myapp/risk.html")

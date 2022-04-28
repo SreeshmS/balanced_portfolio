@@ -11,32 +11,64 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Cedarville Cursive' rel='stylesheet'>
   <style>
-
-    .div {
-      height: 300px;
-      width: 30%;
-      border: solid 1px black;
-      display: inline-block
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 75px;
+      right: 0;
+      background-color: #000000;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 77px;
     }
 
-    .active {
-      width: 75%;
-    }
-    .nonactive {
-      width: 10%;
-    }
-    .div,
-    .active,
-    .nonactive {
-      -webkit-transition: width 1s ease-in-out;
-      -moz-transition: width 1s ease-in-out;
-      -o-transition: width 1s ease-in-out;
-      transition: width 1s ease-in-out;
+    .sidebar a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
     }
 
-<!--    .move-card {-->
-<!--      width:30% !important;-->
-<!--    }-->
+    .sidebar a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #111;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+    }
+
+    .openbtn:hover {
+      background-color: #444;
+    }
+
+    #main {
+      transition: margin-left .5s;
+      padding: 16px;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+      .sidebar {padding-top: 15px;}
+      .sidebar a {font-size: 18px;}
+    }
+
   </style>
 </head>
 
@@ -86,12 +118,11 @@
             <i class="mdi mdi-ballot" style="color: #0090e7;"></i>
         </span>
         <b><span class="menu-title">Equity Class</b>
+          <button class="openbtn" style="float:right;" onclick="openNav()">☰ Open Summary</button>
         </h4>
         <div class="row">
-          <div class="col-md-3 " style="width:21%;display:inline-block;">
+          <div class="col-md-3" style="width:21%;">
             <div class="row">
-                                        <button class="toggle">toggle</button>
-
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card" style="height:115vh;">
                   <div class="card-body">
@@ -145,6 +176,7 @@
                     </table>
                     <div class="row" style="margin-bottom:15px;">
                       <div class="template-demo text-center">
+                        <button type="button" class="btn btn-inverse-warning btn-fw" style="min-width:70px;">View<span class="caret"></span></button>
                         <button type="button" class="btn btn-inverse-primary btn-fw" style="min-width:70px;">Add to Portfolio<span class="caret"></span></button>
                       </div>
                   </div>
@@ -153,10 +185,8 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 div" style="width:59%;">
+          <div class="col-md-9" style="width:79%;">
             <div class="row">
-
-
               <div class="col-md-12 col-xl-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body" style="height:400px;">
@@ -205,32 +235,48 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 div" style="width:20%;">
-            <div class="row">
-                          <button class="toggle">toggle</button>
-
-              <div class="col-md-12 grid-margin stretch-card move-card">
-                <div class="card" style="height:115vh;">
-                  <div class="card-body" style="padding-left:5px;padding-right:15px;">
-                    <h4 class="card-title text-center">Summary</h4>
-                    <h4 class="card-title text-center">Insights</h4>
-                    <ul>
-                      <li>Earnings are forecast to grow, but not significantly</li><br>
-                      <li>Has no debt, therefore it does not need to be covered</li><br>
-                      <li>Dividend (2.05%) is in the top 25% of dividend payers in EP TE) the market (chosen benchmark)</li><br>
-                      <li>CEO total compensation (SUSD6.02M) is above average for companies of similar size in the market</li><br>
-                      <li>Management team is seasoned and experienced</li><br>
-                      <li>Promoter share holding has declined in 3 months</li><br>
-                      <li>4 Directors have resigned in the past years</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<!--          <div class="col-md-3 div" style="width:20%;">-->
+<!--            <div class="row">-->
+<!--              <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>-->
+<!--              <div class="col-md-12 grid-margin stretch-card move-card">-->
+<!--                <div class="card" style="height:115vh;">-->
+<!--                  <div class="card-body" style="padding-left:5px;padding-right:15px;">-->
+<!--                    <h4 class="card-title text-center">Summary</h4>-->
+<!--                    <h4 class="card-title text-center">Insights</h4>-->
+<!--                    <ul>-->
+<!--                      <li>Earnings are forecast to grow, but not significantly</li><br>-->
+<!--                      <li>Has no debt, therefore it does not need to be covered</li><br>-->
+<!--                      <li>Dividend (2.05%) is in the top 25% of dividend payers in EP TE) the market (chosen benchmark)</li><br>-->
+<!--                      <li>CEO total compensation (SUSD6.02M) is above average for companies of similar size in the market</li><br>-->
+<!--                      <li>Management team is seasoned and experienced</li><br>-->
+<!--                      <li>Promoter share holding has declined in 3 months</li><br>-->
+<!--                      <li>4 Directors have resigned in the past years</li>-->
+<!--                    </ul>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
         <!-- content-wrapper ends -->
-
+        <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <div class="card" style="height:115vh;">
+              <div class="card-body" style="padding-left:5px;padding-right:15px;">
+                <h4 class="card-title text-center">Summary</h4>
+                <h4 class="card-title text-center">Insights</h4>
+                <ul>
+                  <li>Earnings are forecast to grow, but not significantly</li><br>
+                  <li>Has no debt, therefore it does not need to be covered</li><br>
+                  <li>Dividend (2.05%) is in the top 25% of dividend payers in EP TE) the market (chosen benchmark)</li><br>
+                  <li>CEO total compensation (SUSD6.02M) is above average for companies of similar size in the market</li><br>
+                  <li>Management team is seasoned and experienced</li><br>
+                  <li>Promoter share holding has declined in 3 months</li><br>
+                  <li>4 Directors have resigned in the past years</li>
+                </ul>
+              </div>
+            </div>
+        </div>
       <!-- partial:partials/_footer.html -->
       <footer class="footer">
         <div class="d-sm-flex justify-content-center justify-content-sm-between">
@@ -246,21 +292,15 @@
 </div>
 
 <script>
-$('.toggle').click(function() {
-  $(this)
-    // get div
-    .parent()
-    // remove nonactive class from clicked element
-    .removeClass('nonactive')
-    // toggle active class
-    .toggleClass('active')
-    // get sibling divs
-    .siblings()
-    // remove active class from siblings
-    .removeClass('active')
-    // toggle nonactive class based on the clicked element
-    .toggleClass('nonactive', $(this).parent().is('.active'));
-})
+function openNav() {
+  document.getElementById("mySidebar").style.width = "600px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
 </script>
     </body>
 </html>
