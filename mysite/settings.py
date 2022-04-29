@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-dyhck82ivui##-x%^sjfdd@)$ydi+#dil#!ru9azroz$gl$2uz
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'balancedportfolio.herokuapp.com']
-
-import mimetypes
-mimetypes.add_type("text/css", ".css", True)
+#
+# import mimetypes
+# mimetypes.add_type("text/css", ".css", True)
 
 # Application definition
 
