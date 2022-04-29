@@ -69,25 +69,25 @@
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>AAPL</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="aapl">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="aapl">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#055C9D;color:#EBEBB8;"><b>CVM</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="cvm">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="cvm">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>F</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="fb">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="fb">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>TSLA</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="ts">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="ts">
                             </td>
                           </tr>
                           <tr>
@@ -186,13 +186,14 @@
                   <div class="card-body">
                     <h4 class="card-title text-center">Allocation</h4>
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                    <div id="piechart" style="width: 400px; height: 200px;"></div>
+                    <div id="piechart" style="width: 400px; height: 100px;"></div>
                   </div>
                 </div>
                 <div class="card" style="height:45vh;">
                   <div class="card-body">
                     <h4 class="card-title text-center">Value at Risk</h4>
-                      <iframe src="/../static/files/var.html" style="height:200px;width:275px;" scrolling="no" frameborder="0"></iframe>
+<!--                      <iframe src="/../static/files/var.html" style="height:200px;width:275px;" scrolling="no" frameborder="0"></iframe>-->
+                      <iframe src="http://127.0.0.1:8000/static/files/var.html" style="height:200px;width:275px;" scrolling="no" frameborder="0"></iframe>
                   </div>
                 </div>
               </div>
@@ -215,6 +216,38 @@
     </div>
 
     <script>
+
+
+    function callFunction (){
+
+              google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(draawChart);
+
+      function draawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Pizza');
+      data.addColumn('number', 'Populartiy');
+      data.addRows(
+       [['Default', 100]]
+      );
+
+        var options = {
+            backgroundColor: '#191c24',
+            'width': 320,
+            'height': 250,
+            'chartArea': {'width': '100%', 'height': '80%'},
+            legend: {textStyle: {color: 'white'}}
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+      }
+
+callFunction()
+
+
     function myFunction() {
       pieArr = []
       aapl = []
@@ -243,24 +276,32 @@
       pieArr.push(fb)
       pieArr.push(tsla)
 
-      console.log(pieArr)
 
       let sum = 0;
-
+        pieArrTot = []
         for (let i = 0; i < pieArr.length; i++) {
-            console.log(pieArr[i][1])
             if (Number.isNaN(pieArr[i][1]) != true){
             console.log('number')
-<!--                console.log(pieArr[i][1])-->
                 sum += Number(pieArr[i][1]);
                        console.log(sum)
             }
+        pieArrTot.push(i[0])
+        pieArrTot.push(i[1])
         }
-                           console.log('dsffsfsd', sum)
-      if (sum){
+
+      if (sum == 100){
+            console.log(pieArr)
+          pieArrTot = pieArr
           google.charts.load('current', {'packages':['corechart']});
           google.charts.setOnLoadCallback(drawChart);
+      } if (sum < 100) {
+                pieArrTot = pieArr
+                      console.log(pieArrTot)
+
+        google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
       }
+
     }
 
       function drawChart() {
@@ -268,7 +309,7 @@
       data.addColumn('string', 'Pizza');
       data.addColumn('number', 'Populartiy');
       data.addRows(
-       pieArr
+       pieArrTot
       );
 
         var options = {
@@ -283,7 +324,6 @@
 
         chart.draw(data, options);
       }
-
     </script>
 
   </body>

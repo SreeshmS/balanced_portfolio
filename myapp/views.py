@@ -29,16 +29,37 @@ import mpld3
 
 # Create your views here.
 def home(request):
-    return render(request, "myapp/portfolio_c.html")
+    # return render(request, "myapp/portfolio_c.html")
+    return render(request, "myapp/port.html")
 
 def equity(request):
     return render(request, "myapp/eq.html")
 
 def bond(request):
-    return render(request, "myapp/checkbox.html")
+    return render(request, "myapp/bond.html")
 
 def risk(request):
     return render(request, "myapp/risk.html")
+
+# for acquire
+import json
+
+class bondsSelected(APIView):
+    def get(self, request, format=None):
+
+        params = self.request.GET
+        print(params)
+
+        return Response({}, status=status.HTTP_200_OK)
+
+
+
+def YourViewsHere(request):
+   if request.method == 'GET':
+       print(request)
+   elif request.method == 'POST':
+       ## access you data by playing around with the request.POST object
+       request.POST.get('data')
 
 # def ticker_data(tickers, start, end):
 #     df = yf.download(tickers=tickers, start=start, end=end)

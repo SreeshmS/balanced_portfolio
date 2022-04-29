@@ -9,6 +9,7 @@ urlpatterns = [
     path('risk', views.risk, name = "risk"),
     path('bond', views.bond, name = "bond"),
     # url(r'portfolio/', portfolio.as_view()),
+    url(r'bondsSelected/', bondsSelected.as_view()),
 ]
 
 # from django.urls import path

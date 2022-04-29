@@ -1,15 +1,69 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-<head>
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Balanced Portfolio</title>
+    <!-- plugins:css -->
+<!--    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">-->
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+
+<!--    <link rel="stylesheet" href="assets/css/style.css">-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- End layout styles -->
+<!--    <link rel="shortcut icon" href="assets/images/favicon.png" />-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Cedarville Cursive' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+  </head>
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 </head>
 
-<body>
+<body data-ng-app="newApp" data-ng-controller="newCtrl">
+{% verbatim %}
+    <div class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
 
-{% extends 'myapp/main.html' %}
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper" style="width:100% !important;">
+        <div class="main-panel" style="padding-top:15px !important;">
+          <nav class="navbar navbar-expand-lg navbar-dark " style="left:0px !important;padding-top:0px !important;padding-bottom:0px !important;">
+              <div class="container-fluid">
+                  <a href="#" class="navbar-brand"><img src="./static/images/cglogo.png" alt=""></a>
+                  <a href="portfolio" class="navbar-brand" style="font-family: 'Cedarville Cursive';">Balanced Portfolio</a>
+                  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                      <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarCollapse">
+                      <div class="navbar-nav">
+                          <a href="portfolio" class="nav-item nav-link active">
+                          <span class="menu-icon">
+                              <i class="mdi mdi-speedometer" style="color: #00d25b;"></i>
+                          </span>
+                          <b><span class="menu-title">Portfolio Dashboard</b>
+                          </a>
+                          <a href="equity" class="nav-item nav-link">
+                          <span class="menu-icon">
+                              <i class="mdi mdi-ballot" style="color: #0090e7;"></i>
+                          </span>
+                          <b><span class="menu-title">Equity Class</b>
+                          </a>
+                          <a href="bond" class="nav-item nav-link">
+                          <span class="menu-icon">
+                              <i class="mdi mdi-dip-switch" style="color: #ffab00;"></i>
+                          </span>
+                          <b><span class="menu-title">Fixed Income Securities</b>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </nav>
 
-{% block content %}
+
 <!--  <h4 class="text-center">Equity</h4>-->
   <div class="content-wrapper">
     <h4 style="padding-bottom:15px; !important;">
@@ -25,15 +79,19 @@
             <div class="card" style="height:115vh;">
               <div class="card-body">
                 <h4 class="card-title text-center">Bond Prices</h4>
+<!--                <b style="color:black;" ng-click="allUnselected()"> &nbsp <span style="text-decoration:underline;cursor:pointer;"> UNSELECT ALL</span></b>-->
                 <table class="table" style="width:100%;border:2px solid #191c24;background-color:#36454F;">
                   <tr>
+<!--                    <td style="width:10%;border:2px solid #191c24;color:#FFA500;"><input type="checkbox" name="compB" class="bc" ng-click="allSelected();">SELECT ALL</td>-->
                     <td style="width:10%;border:2px solid #191c24;color:#FFA500;"></td>
                     <td style="width:50%;border:2px solid #191c24;color:#FFA500;"><b>Bond</b></td>
                     <td style="border:2px solid #191c24;color:#FFA500;"><b>LTP</b></td>
                   </tr>
-                  <tr>
-                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox" value="US10Y" name="ips"></td>
-                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>US10Y</b></td>
+                  <tr ng-repeat="a in bondList">
+                    <td style="width:10%;border:2px solid #191c24;">
+                      <input type="checkbox" name="compB" class="bc"" value="{{a}}">
+                    </td>
+                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>{{a}}</b></td>
                     <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
                       <span class="menu-icon">
                           <i class="mdi mdi-arrow-down-bold" style="color: #ff726f;float:left;"></i>
@@ -41,62 +99,12 @@
                       <b>USD 4.00</b>
                     </td>
                   </tr>
-                  <tr>
-                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
-                    <td style="width:50%;border:2px solid #191c24;color:#055C9D;color:#EBEBB8;"><b>US5Y</b></td>
-                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
-                      <span class="menu-icon">
-                          <i class="mdi mdi-arrow-up-bold" style="color: #76B947;float:left;"></i>
-                      </span>
-                      <b>USD 2.55</b>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
-                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>US1Y</b></td>
-                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
-                      <span class="menu-icon">
-                          <i class="mdi mdi-arrow-up-bold" style="color: #76B947;float:left;"></i>
-                      </span>
-                      <b>USD 2.55</b>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
-                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>EU10Y</b></td>
-                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
-                      <span class="menu-icon">
-                          <i class="mdi mdi-arrow-right-bold" style="color:#FEDE00;float:left;"></i>
-                      </span>
-                      <b>USD 7.32</b>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
-                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>UK1Y</b></td>
-                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
-                      <span class="menu-icon">
-                          <i class="mdi mdi-arrow-up-bold" style="color: #76B947;float:left;"></i>
-                      </span>
-                      <b>USD 8.96</b>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width:10%;border:2px solid #191c24;"><input type="checkbox"/></td>
-                    <td style="width:50%;border:2px solid #191c24;color:#EBEBB8;"><b>UK30Y</b></td>
-                    <td style="width:40%;border:2px solid #191c24;text-align:right;color:#EBEBB8;">
-                      <span class="menu-icon">
-                          <i class="mdi mdi-arrow-down-bold" style="color: #ff726f;float:left;"></i>
-                      </span>
-                      <b>USD 8.96</b>
-                    </td>
-                  </tr>
                 </table>
 
                 <div class="row" style="margin-bottom:15px;">
                   <div class="template-demo text-center">
                     <button type="button" class="btn btn-inverse-warning btn-fw" style="min-width:70px;">View<span class="caret"></span></button><br>
-                    <button type="button" ng-click="getSelected()" class="btn btn-inverse-primary btn-fw" style="min-width:70px;">Add to Portfolio<span class="caret"></span></button>
+                    <button type="button"  ng-click="changeBond()"; class="btn btn-inverse-primary btn-fw" style="min-width:70px;">Add to Portfolio<span class="caret"></span></button>
                   </div>
               </div>
               </div>
@@ -223,28 +231,87 @@
       </div>
     </div>
     <!-- content-wrapper ends -->
-{% endblock content %}
+{% endverbatim %}
 
 
 <script>
-$(document).ready(function() {
-console.log("csdfsjff")
-  var ckbox = $("input[name='ips']");
-  var chkId = '';
-  $('input').on('click', function() {
+  var app = angular.module('newApp', []);
 
-    if (ckbox.is(':checked')) {
-      $("input[name='ips']:checked").each ( function() {
-   			chkId = $(this).val() + ",";
-        chkId = chkId.slice(0, -1);
- 	  });
+  app.controller('newCtrl', function($scope, $http, $rootScope) {
 
-       alert ( $(this).val() ); // return all values of checkboxes checked
-       alert(chkId); // return value of checkbox checked
+  $scope.bondList = ['US10Y', 'US5Y', 'US1Y', 'EU10Y', 'UK1Y', 'UK30Y']
+
+  $scope.changeBond = function(){
+
+          compArr = []
+      $rootScope.allCheckBox = document.querySelectorAll('.bc')
+       if ($rootScope.allCheckBox != undefined){
+          for (let i = 0; i < $rootScope.allCheckBox.length; i++) {
+              if ($rootScope.allCheckBox[i].checked == true){
+                sel  = $rootScope.allCheckBox[i].value
+                compArr.push(sel)
+              }
+          }
+       }
+
+      console.log(compArr)
+
+       $scope.compSelLen = compArr.length
+
+          var arrStr = encodeURIComponent(JSON.stringify(compArr));
+
+          $scope.compSelected = compArr.length.toString() + ' selected'
+
+        $http({
+          method: 'GET',
+          url: '/api/bondsSelected/?compList='+arrStr
+        }).then(function(response) {
+            console.log(response)
+
+
+        })
+
+  }
+<!--multiple-->
+
+
+    // competitors multiple select
+
+    var checkList = document.getElementById('list1');
+<!--    checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {-->
+<!--      if (checkList.classList.contains('visible'))-->
+<!--        checkList.classList.remove('visible');-->
+<!--      else-->
+<!--        checkList.classList.add('visible');-->
+<!--    }-->
+
+<!--    $scope.closeDropDown = function(){-->
+<!--      checkList.classList.remove('visible');-->
+<!--    }-->
+
+    $scope.allSelected = function(){
+      console.log('sdfsdf')
+      var ele=document.getElementsByName('compB');
+      for(var i=0; i<ele.length; i++){
+        if(ele[i].type=='checkbox')
+          ele[i].checked=true;
+      }
+      $scope.compSelected = ele.length.toString() + ' selected'
     }
-  });
-});
+
+    $scope.allUnselected = function(){
+      var ele=document.getElementsByName('compB');
+      for(var i=0; i<ele.length; i++){
+        if(ele[i].type=='checkbox')
+          ele[i].checked=false;
+      }
+
+    }
+
+    });
+
 </script>
+
 
 </body>
 </html>

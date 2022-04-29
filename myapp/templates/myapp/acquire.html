@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Lato", sans-serif;
+      background:#eef2f3;
+      font-size:16px;
+    }
+
+    .h5, h5 {
+      font-size:16px !important;
+    }
+
+    .sidebar {
+      margin: 0;
+      padding: 0;
+      width: 200px;
+      background-color: #eef2f3;
+      position: fixed;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .shadow {
+      /* border: 1px solid #333; */
+      width: 200px;
+      height: 100%;
+      box-shadow: 10px 0 5px -2px #888;
+    }
+
+    .sidebar a {
+      display: block;
+      color: black;
+      padding: 16px;
+      text-decoration: none;
+    }
+
+    .sidebar a.active {
+      /* background-color: #04AA6D; */
+      background-color: white;
+      color: black;
+      border-bottom: 1px solid grey;
+      border-left: 3px solid red;
+    }
+
+    .sidebar a:hover:not(.active) {
+      background-color: #555;
+      color: white;
+    }
+
+    div.content {
+      margin-left: 200px;
+    }
+
+    .filter-font {
+      margin-bottom:5px;
+      color:grey;
+      font-size:12px;
+    }
+
+    .filter-box {
+      border:1px solid #DCDCDC;
+      color:black;
+      padding:10px;
+      border-radius:5px;
+      background:white;
+      width:100%;
+    }
+
+    .frame-res {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    #dashHead {
+      font-size:30px;
+      color:black;
+    }
+
+    @media screen and (max-width: 700px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .sidebar a {float: left;}
+      div.content {margin-left: 0;}
+    }
+
+    @media screen and (max-width: 400px) {
+      .sidebar a {
+        text-align: center;
+        float: none;
+      }
+    }
+
+    .input-icons i {
+        position: absolute;
+    }
+
+    .input-icons {
+        width: 95%;
+        margin-bottom: 10px;
+    }
+
+    .icon {
+        padding: 10px;
+        min-width: 40px;
+    }
+
+    .input-field {
+        width: 30%;
+        padding: 10px;
+        text-align: center;
+    }
+
+    button:focus {
+      border: 3px solid #F0F0F0;
+    }
+
+    .dropdown-check-list {
+      display: inline-block;
+      position:absolute;
+      z-index:99999999999;
+    }
+
+    .dropdown-check-list ul.items {
+      padding: 2px;
+      display: none;
+      margin: 0;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
+
+    .dropdown-check-list ul.items li {
+      list-style: none;
+    }
+
+    .dropdown-check-list.visible .anchor {
+      color: #0094ff;
+    }
+
+    .dropdown-check-list.visible .items {
+      display: block;
+    }
+
+    .dropdown-check-list .anchor {
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        width: 250px;
+        height: 40px;
+        border: 1px solid #DCDCDC;
+        border-radius: 5px;
+        padding: 10px 5px 0px 15px;
+    }
+
+    table.scrollTable {
+      width: 100%;
+    }
+
+    tbody.scrollContent {
+      display: block;
+      height: 262px;
+      overflow: auto;
+    }
+
+    tbody.scrollContent td {
+      height: 25px;
+    }
+
+    tbody.scrollContent td {
+      width: 233px;
+    }
+
+    .horizontal-scroll-except-first-column {
+      width: 100%;
+      overflow: auto;
+    }
+
+    .horizontal-scroll-except-first-column > table {
+      margin-left: 8em;
+    }
+
+    .horizontal-scroll-except-first-column > table > * > tr > th:first-child,
+    .horizontal-scroll-except-first-column > table > * > tr > td:first-child {
+      position: absolute;
+      width: 8em;
+      margin-left: -8em;
+      background:#eef2f3;
+    }
+
+    .horizontal-scroll-except-first-column > table > * > tr > th,
+    .horizontal-scroll-except-first-column > table > * > tr > td {
+      /* Without this, if a cell wraps onto two lines, the first column
+       * will look bad, and may need padding. */
+      white-space: nowrap;
+    }
+
+    .btn-default:focus {
+      outline: none;
+      border: none;
+    }
+
+</style>
+</head>
+<body data-ng-app="newApp" data-ng-controller="newCtrl">
+{% verbatim %}
+
+<div class="sidebar shadow">
+  <a href="#home" style="background:white;" class="text-center"><img src="../static/images/cg.jpg" alt=""></a>
+  <a class="active" href="acquire">Acquire</a>
+  <a href="journey">Customer Journey</a>
+  <a href="search">Search</a>
+  <a href="#about">Web / Mobile</a>
+  <a href="#about">Social Media</a>
+  <a href="#about">Referral</a>
+</div>
+
+<div class="content">
+  <!--  container starts-->
+  <div class="container-fluid">
+    <div class="row text-center" style="color:#DCDCDC;margin:10px;">
+      <a id="dashHead"><b>CX DASHBOARD</b></a>
+    </div>
+    <!--    filter starts here-->
+    <div class="row" style="color:#DCDCDC">
+      <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <h5 class="filter-font">Geography :</h5>
+        <select class="filter-box" ng-options="div for div in geoList" ng-model="geoSelected" ng-click="getProductList(geoSelected, proSelected, bankSelected)">
+          <option value="" >--Select Geography--</option>
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <h5 class="filter-font">Product :</h5>
+        <select class="filter-box" ng-options="div for div in productList" ng-model="proSelected" ng-click="getBankList(geoSelected, proSelected)">
+          <option value="">--Select Product--</option>
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <h5 class="filter-font">Bank :</h5>
+        <select class="filter-box" ng-options="div for div in bankList" ng-model="bankSelected" ng-click="getCompList(bankSelected);">
+          <option value="">--Select Bank--</option>
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <h5 class="filter-font">Competitor :</h5>
+        <div id="list1" class="dropdown-check-list" tabindex="100">
+          <span class="anchor" style="color:black;background:white;border-radius:5px;">{{compSelected}}<i class="fa fa-chevron-down" style="float:right;position:relative;top:5px;color:black;font-size:11px;"></i></span>
+          <ul class="items" style="padding:7px;background:white;">
+            <i class="fa fa-window-close" style="float:right;color:black;cursor:pointer;" ng-click="getAcquire();closeDropDown();"></i>
+            <li><b style="color:black;text-decoration:underline;cursor:pointer;" ng-click="allSelected()">SELECT ALL </b> <b style="color:black;" ng-click="allUnselected()"> &nbsp <span style="text-decoration:underline;cursor:pointer;"> UNSELECT ALL</span></b></li>
+            <li ng-repeat="a in compList" style="color:black;padding-top:5px;"><input type="checkbox" name="compB" class="bc" ng-click="getAcquire();changeBankList();" value="{{a}}"> {{a}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+        <h5 class="filter-font">Time Period :</h5>
+        <select class="filter-box" ng-options="div for div in dateList" ng-model="dateSelected" ng-click="getAcquire()">
+          <option value="">--Select Time Period--</option>
+        </select>
+      </div>
+    </div>
+
+    <!--    row 1 starts-->
+    <div class="row" style="margin-top:20px;margin-bottom:10px;">
+      <div class="col-md-6" style="padding-right:0px !important;min-height:300px;">
+        <div style="border:2px solid #DCDCDC; border-radius:5px;background:#F8F8FF;min-height:255px;">
+          <div class="row" style="margin:10px;">
+            <h5 class="text-center" style="margin-bottom:0px !important;margin-top:0px !important;"><b style="color:black;">Acquire Score </b></h5>
+            <div class="col-md-8" style="margin-top:25px;">
+              <table cellspacing="0" cellpadding="0" class="scrollTable table ">
+                <tbody class="scrollContent">
+                <tr  ng-repeat="a in acquire">
+                  <td style="color:blue;">{{a.bank}}</td>
+                  <td style="color:blue;">{{a.score}}</td>
+                  <td><i class="fa fa-caret-up" style="color:{{a.indicator=='u'?'green':'red'}};font-size:16px;"></i> <span style="color:blue">{{a.perc}} %</span></td>
+                </tr>
+                <tr ng-repeat="a in comp_acquire">
+                  <td>{{a.bank}}</td>
+                  <td>{{a.score}}</td>
+                  <td><i class="{{a.indicator=='u'?'fa fa-caret-up':'fa fa-caret-down'}}" style="color:{{a.indicator=='u'?'green':'red'}};font-size:16px;"></i> {{a.perc}} %</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-4" style="margin-top:20px;">
+              <p style="font-weight:100;">This ticker indicates the Acquire Score of the bank and deviation from the Industry Median.</p><br>
+              <p style="font-weight:100;"><i class="fa fa-caret-up" style="color:green;font-size:16px;"></i> Acquire Score is higher than the Median by mentioned percentage points.</p><br>
+              <p style="font-weight:100;"><i class="fa fa-caret-down" style="color:red;font-size:16px;"></i> Acquire Score is lower than the Median by mentioned percentage points.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="border:2px solid #DCDCDC; border-radius:5px;background:#F8F8FF;min-height:255px;min-height:300px;">
+          <h5 class="text-center" style="margin-bottom:0px !important;"><b style="color:black;">Performance Quadrant </b></h5>
+          <div class="frame-res"><iframe id="pa" src="/../static/files/performance.html" scrolling="no" frameborder="0" width="800" height="315"></iframe></div>
+
+        </div>
+      </div>
+    </div>
+    <!--row 1 ends-->
+
+    <!--    row 2 starts-->
+
+    <div class="row" style="margin-top:20px;margin-bottom:10px;">
+      <div class="col-md-6" style="padding-right:0px !important;">
+        <div style="border:2px solid #DCDCDC; border-radius:5px;background:#F8F8FF;min-height:390px;">
+          <h5 class="text-center" style="margin-bottom:0px !important;"><b>Customer Journey<b></h5>
+          <div ng-if="customerChart" style="margin-right:20px;">
+            <div class="row">
+                <div class="frame-res"><iframe src="/../static/files/customerJ.html" id="cust" frameborder="0"  height="435" width="600"  scrolling="no" style="margin-top:-70px;margin-bottom:-50px;"></iframe></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="border:2px solid #DCDCDC; border-radius:5px;background:#F8F8FF;min-height:390px;">
+          <h5 class="text-center"><b>Needs Addressed<b></h5>
+
+          <div ng-if="needsChart">
+            <div class="row" style="margin:20px;">
+              <div class="frame-res"><iframe id="neat" src="/../static/files/needsAddress.html" frameborder="0" scrolling="no" height="435" width="600" style="margin-top:-70px;margin-bottom:-50px;"></iframe></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--    row 2 ends-->
+
+
+    <!--    row 1 starts-->
+    <div class="row" style="margin-top:20px;margin-bottom:20px;">
+      <div class="col-md-6" style="padding-right:0px !important;">
+        <div style="border:2px solid #DCDCDC; border-radius:5px;background:#F8F8FF;min-height:300px;">
+          <h5 class="text-center" ><b>Customer Journey<b></h5>
+          <div class="row" style="margin:20px;">
+            <div class="col-md-6" style="padding-left:0px !important;">
+              <div class="input-group">
+                <input type="text" ng-model="filterInp" class="form-control" placeholder="Filter by Attribute" aria-describedby="basic-addon2">
+                <span class="input-group-addon" id="basic-addon2" style="margin-right:20px;background:#337ab7;border-color: #2e6da4;color:white;cursor:pointer;" ng-click="filterCustTable(filterInp)">Search</span>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <button type="button" class="btn btn-default" style="border:1px solid #DCDCDC;" ng-click="custClear()">Clear</button>
+            </div>
+            <!--                <span style="float:right;margin-right:20px;font-size:25px;">-->
+            <!--          <i class="fa fa-info-circle" style="color:#A9A9A9;cursor:pointer;" ng-click="showCustomerChart()"></i>-->
+            <!--        </span>-->
+          </div>
+
+          <div class="row" style="margin:20px;">
+            <div class="col-md-11" style="padding-left:0px !important;">
+              <div class="horizontal-scroll-except-first-column" style="margin-top:20px;">
+                <table id="custTab" cellspacing="0" cellpadding="0" class="scrollTable table" style="border-collapse: collapse;border-spacing: 0;width: 100%;">
+                  <tr>
+                    <th>Attribute</th>
+                    <th ng-repeat="a in cj_ARR" style="color:blue;">{{a[0]['bank']}}</th>
+                    <th ng-repeat="a in comp_ARR">{{a[0]['bank']}}</th>
+                  </tr>
+                  <tr>
+                    <td>Awareness</td>
+                    <td style="font-weight:100;color:blue;" ng-repeat="a in cj_ARR">{{a[0]['awarness']}}</td>
+                    <td style="font-weight:100;" ng-repeat="a in comp_ARR">{{a[0]['comp_awarness']}}</td>
+                  </tr>
+                  <tr>
+                    <td>Commitment</td>
+                    <td style="font-weight:100;color:blue;" ng-repeat="a in cj_ARR">{{a[0]['commitment']}}</td>
+                    <td style="font-weight:100;" ng-repeat="a in comp_ARR">{{a[0]['comp_commitment']}}</td>
+                  </tr>
+                  <tr>
+                    <td>Evaluation</td>
+                    <td style="font-weight:100;color:blue;" ng-repeat="a in cj_ARR">{{a[0]['evaluation']}}</td>
+                    <td style="font-weight:100;" ng-repeat="a in comp_ARR">{{a[0]['comp_evaluation']}}</td>
+                  </tr>
+                  <tr>
+                    <td>Purchase</td>
+                    <td style="font-weight:100;color:blue;" ng-repeat="a in cj_ARR">{{a[0]['purchase']}}</td>
+                    <td style="font-weight:100" ng-repeat="a in comp_ARR">{{a[0]['comp_purchase']}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="border:2px solid #DCDCDC; border-radius:5px;background:#F8F8FF;min-height:300px;">
+          <h5 class="text-center"><b>Needs Addressed<b></h5>
+
+          <div class="row" style="margin:20px;">
+            <div class="col-md-6" style="padding-left:0px !important;">
+              <div class="input-group">
+                <input type="text" ng-model="filternInp" class="form-control" placeholder="Filter by Attribute" aria-describedby="basic-addon2">
+                <span class="input-group-addon" id="basic-addon2" style="margin-right:20px;background:#337ab7;border-color: #2e6da4;color:white;cursor:pointer;" ng-click="filterTable(filternInp)">Search</span>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <button type="button" class="btn btn-default" style="border:1px solid #DCDCDC;" ng-click="needClear()">Clear</button>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-11">
+              <div class="horizontal-scroll-except-first-column" style="margin:20px;">
+                <table id="needTab" cellspacing="0" cellpadding="0" class="scrollTable table" style="border-collapse: collapse;border-spacing: 0;width: 100%;">
+                  <tr>
+                    <th>Attribute</th>
+                    <th ng-repeat="a in na_ARR" style="color:blue;">{{a[0]['bank']}}</th>
+                    <th ng-repeat="a in comp_naARR">{{a[0]['bank']}}</th>
+                  </tr>
+                  <tr>
+                    <td>Search</td>
+                    <td style="font-weight:100;color:blue;" ng-repeat="a in na_ARR">{{a[0]['ovsearch']}}</td>
+                    <td style="font-weight:100" ng-repeat="a in comp_naARR">{{a[0]['comp_ovsearch']}}</td>
+                  </tr>
+                  <tr>
+                    <td>Web / Mobile</td>
+                    <td style="font-weight:100;color:blue;" ng-repeat="a in na_ARR">{{a[0]['ovweb']}}</td>
+                    <td style="font-weight:100" ng-repeat="a in comp_naARR">{{a[0]['comp_ovweb']}}</td>
+                  </tr>
+                  <tr>
+                    <td>Social Media</td>
+                    <td style="font-weight:100;color:blue;" ng-repeat="a in na_ARR">{{a[0]['ovsocial']}}</td>
+                    <td style="font-weight:100" ng-repeat="a in comp_naARR">{{a[0]['comp_ovsocial']}}</td>
+                  </tr>
+                  <tr>
+                    <td>Referral</td>
+                    <td style="font-weight:100;color:blue;" ng-repeat="a in na_ARR">{{a[0]['ovreferal']}}</td>
+                    <td style="font-weight:100" ng-repeat="a in comp_naARR">{{a[0]['comp_ovreferal']}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--row 1 ends-->
+
+  </div>
+</div>
+
+{% endverbatim %}
+
+
+
+<script>
+  var app = angular.module('newApp', []);
+
+  app.controller('newCtrl', function($scope, $http, $rootScope) {
+
+    $scope.filterTable = function(a){
+        var input, filter, table, tr, td, i, txtValue;
+<!--        input = document.getElementById("myInput");-->
+<!--        filter = input.value.toUpperCase();-->
+        filter = a.toUpperCase();
+        table = document.getElementById("needTab");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+    }
+
+    $scope.filterCustTable = function(a){
+        var input, filter, table, tr, td, i, txtValue;
+<!--        input = document.getElementById("myInput");-->
+<!--        filter = input.value.toUpperCase();-->
+        filter = a.toUpperCase();
+        table = document.getElementById("custTab");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+    }
+
+    $scope.needClear = function(){
+        var table, tr, td, i;
+        table = document.getElementById("needTab");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          tr[i].style.display = "";
+        }
+    }
+
+    $scope.custClear = function(){
+        var table, tr, td, i;
+        table = document.getElementById("custTab");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          tr[i].style.display = "";
+        }
+    }
+
+    // competitors multiple select
+
+    var checkList = document.getElementById('list1');
+    checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+      if (checkList.classList.contains('visible'))
+        checkList.classList.remove('visible');
+      else
+        checkList.classList.add('visible');
+    }
+
+    $scope.closeDropDown = function(){
+      checkList.classList.remove('visible');
+    }
+
+    $scope.allSelected = function(){
+      var ele=document.getElementsByName('compB');
+      for(var i=0; i<ele.length; i++){
+        if(ele[i].type=='checkbox')
+          ele[i].checked=true;
+      }
+      $scope.compSelected = ele.length.toString() + ' selected'
+    }
+
+    $scope.allUnselected = function(){
+      var ele=document.getElementsByName('compB');
+      for(var i=0; i<ele.length; i++){
+        if(ele[i].type=='checkbox')
+          ele[i].checked=false;
+      }
+<!--      $http({-->
+<!--          method: 'GET',-->
+<!--          url: '/api/filtersList/?pro='+ $scope.productList[0] +'&bank=' +  $scope.bankList[0]-->
+<!--        }).then(function(response) {-->
+<!--          $scope.compList = response.data.compList-->
+<!--          $scope.compSelected = $scope.compList[0]-->
+<!--           $scope.getAcquire()-->
+<!--        })-->
+    }
+
+    // get all filters
+    $scope.getGeoFilters = function() {
+
+    $http({
+        method: 'GET',
+        url: '/api/filtersList/'
+      }).then(function(response) {
+          $scope.geoList = response.data.geoList
+          $scope.geoSelected = $scope.geoList[0]
+
+      $http({
+        method: 'GET',
+        url: '/api/filtersList/?geo='+$scope.geoList[0]
+      }).then(function(response) {
+        $scope.productList = response.data.productList
+        $scope.proSelected = $scope.productList[0]
+
+      $http({
+        method: 'GET',
+        url: '/api/filtersList/?pro=' + $scope.productList[0] + '&geo=' + $scope.geoList[0]
+      }).then(function(response) {
+        $scope.bankList = response.data.bankList
+        $scope.bankSelected = $scope.bankList[0]
+
+
+        $http({
+          method: 'GET',
+          url: '/api/filtersList/?pro='+ $scope.productList[0] +'&bank=' +  $scope.bankList[0] + '&geo=' + $scope.geoList[0]
+        }).then(function(response) {
+          $scope.compList = response.data.compList
+          $scope.compSelected = $scope.compList[0]
+          $scope.dateList = response.data.dateList
+          $scope.dateSelected = $scope.dateList[0]
+          $scope.getAcquire()
+        })
+      })
+      })
+      })
+
+
+    };
+
+    $scope.getGeoFilters();
+
+    // get pro filters
+    $scope.getProductList = function(geo, pro, bank){
+      var checkList = document.getElementById('list1');
+      checkList.classList.remove('visible');
+
+      $http({
+        method: 'GET',
+        url: '/api/selectionList/?geo='+geo + '&pro=' + pro+ '&bank=' + bank + '&loadGeo=true'
+      }).then(function(response) {
+        if (response.data == 'Insufficient Data'){
+          $scope.errMsg = 'Insufficient Data'
+        }
+        $scope.productList = response.data.productList
+        $scope.proSelected = $scope.productList[0]
+        $scope.bankList = response.data.bankList
+        $scope.bankSelected = $scope.bankList[0]
+        $scope.compList = response.data.compList
+        $scope.compSelected = $scope.compList[0]
+        $scope.dateList = response.data.dateList
+        $scope.dateSelected = $scope.dateList[0]
+        $scope.getAcquire()
+      })
+    }
+
+    // get bank filters
+    $scope.getBankList = function(geo, pro){
+      var checkList = document.getElementById('list1');
+      checkList.classList.remove('visible');
+
+      $http({
+        method: 'GET',
+        url: '/api/selectionList/?pro=' + pro + '&geo=' + $scope.geoSelected + '&loadBank=true'
+      }).then(function(response) {
+        $scope.bankList = response.data.bankList
+        $scope.bankSelected = $scope.bankList[0]
+        $scope.compList = response.data.compList
+        $scope.compSelected = $scope.compList[0]
+        $scope.dateList = response.data.dateList
+        $scope.dateSelected = $scope.dateList[0]
+        $scope.getAcquire()
+      })
+    }
+
+    // get comp filters
+    $scope.getCompList = function(bank){
+      var checkList = document.getElementById('list1');
+      checkList.classList.remove('visible');
+
+      $http({
+        method: 'GET',
+        url: '/api/selectionList/?pro='+$scope.proSelected +'&bank=' + bank + '&geo=' + $scope.geoSelected + '&loadComp=true'
+      }).then(function(response) {
+        $scope.compList = response.data.compList
+        $scope.compSelected = $scope.compList[0]
+<!--        $scope.setCom()-->
+              $scope.getAcquire()
+<!--        $scope.getAcquire()-->
+      })
+    }
+
+
+<!--    $scope.setCom = function(){-->
+<!--      $rootScope.allCheckBox = document.querySelectorAll('.bc')-->
+<!--      for (let i = 0; i < $rootScope.allCheckBox.length; i++) {-->
+<!--&lt;!&ndash;        allCheckBox[i].checked = false&ndash;&gt;-->
+<!--        $rootScope.allCheckBox[0].checked = true-->
+<!--      }-->
+<!--      $scope.getAcquire()-->
+<!--    }-->
+
+    // customer journey toggle
+    $scope.customerChart = true
+    $scope.showCustomerGraph = function(){
+      $scope.customerGraph = true
+      $scope.customerChart = false
+    }
+
+    $scope.showCustomerChart = function(){
+      $scope.customerChart = true
+      $scope.customerGraph = false
+    }
+
+    // needs addressed toggle
+    $scope.needsChart = true
+    $scope.showNeedsGraph = function(){
+      $scope.needsGraph = true
+      $scope.needsChart = false
+    }
+
+    $scope.showNeedsChart = function(){
+      $scope.needsChart = true
+      $scope.needsGraph = false
+    }
+
+
+    // get acquire
+    $scope.getAcquire = function() {
+      compArr = []
+      $rootScope.allCheckBox = document.querySelectorAll('.bc')
+<!--          let allCheckBox = document.querySelectorAll('.bc')-->
+       if ($rootScope.allCheckBox != undefined){
+          for (let i = 0; i < $rootScope.allCheckBox.length; i++) {
+              if ($rootScope.allCheckBox[i].checked == true){
+                sel  = $rootScope.allCheckBox[i].value
+                compArr.push(sel)
+              }
+          }
+       }
+<!--       else {-->
+<!--          compArr.push($scope.compSelected)-->
+<!--       }-->
+
+       $scope.compSelLen = compArr.length
+
+          var arrStr = encodeURIComponent(JSON.stringify(compArr));
+
+<!--          if (compArr.length > 1){-->
+            $scope.compSelected = compArr.length.toString() + ' selected'
+<!--          }-->
+        $http({
+          method: 'GET',
+          url: '/api/acquireData/?pro='+$scope.proSelected+'&bank='+$scope.bankSelected+'&compList='+arrStr+'&geo='+$scope.geoSelected+'&date='+$scope.dateSelected
+        }).then(function(response) {
+            console.log(response)
+            $scope.acquire = response.data.acquire
+            $scope.comp_acquire = response.data.comp_acquire
+            $scope.comp_ARR = response.data.comp_ARR
+            $scope.cj_ARR = response.data.cj_ARR
+            $scope.comp_naARR = response.data.comp_naARR
+            $scope.na_ARR = response.data.na_ARR
+            $scope.percVal = response.data.percVal
+
+          const custFrame = '/../static/files/customerJ.html' + '?timestamp=' + new Date().getTime()
+          document.getElementById('cust').src = custFrame
+
+          const needFrame = '/../static/files/needsAddress.html' + '?timestamp=' + new Date().getTime()
+          document.getElementById('neat').src = needFrame
+
+          const perFrame = '/../static/files/performance.html' + '?timestamp=' + new Date().getTime()
+          document.getElementById('pa').src = perFrame
+
+
+          <!--    bank list update-->
+          $http({
+            method: 'GET',
+            url: '/api/selectionList/?pro='+$scope.proSelected +'&bank=' + $scope.bankSelected + '&geo=' + $scope.geoSelected + '&acquireBank=true' + '&comp=' + arrStr
+          }).then(function(response) {
+            $scope.bankList = response.data.bankList
+          })
+
+        })
+    };
+
+  })
+
+  </script>
+
+</body>
+</html>
