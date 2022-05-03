@@ -9,8 +9,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Cedarville Cursive' rel='stylesheet'>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   </head>
-  <body>
+  <body data-ng-app="newApp" data-ng-controller="newCtrl">
+  {% verbatim %}
+
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper" style="width:100% !important;">
         <div class="main-panel" style="padding-top:15px !important;">
@@ -69,43 +72,43 @@
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>AAPL</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="aapl">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="aapl">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#055C9D;color:#EBEBB8;"><b>CVM</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="cvm">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="cvm">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>F</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="fb">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="fb">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>TSLA</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="ts">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="ts">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>US10Y</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="uten">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="uten">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>US5Y</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="ufive">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="ufive">
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>US1Y</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value" id="uone">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="uone">
                             </td>
                           </tr>
 <!--                          <tr>-->
@@ -136,7 +139,7 @@
                           <tr>
                             <td style="border:2px solid #191c24;color:#EBEBB8;"><b>Initial Investment</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" id="inv">
                             </td>
                           </tr>
                         </table>
@@ -148,19 +151,20 @@
 <!--                            <td style="border:2px solid #191c24;color:#191c24;background-color:#191c24;"><b>Weight (%)</b></td>-->
 <!--                          </tr>-->
                           <tr>
-                            <td style="border:2px solid #191c24;color:#EBEBB8;"><b>Confidence Interval</b></td>
+                            <td style="border:2px solid #191c24;color:#EBEBB8;"><b>Loss Tolerance (CI)</b></td>
                             <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
-                              <input type="text" style="background-color:#36454F;width:90%;border:none;" placeholder="enter value">
+                              <input type="text" style="background-color:#36454F;width:90%;border:none;color:white;" placeholder="enter value" ng-click="putText();getCalc();" id="ci">
                             </td>
                           </tr>
                           <tr>
-                            <td style="border:2px solid #191c24;color:#EBEBB8;"><b>VaR @ 5%</b></td>
-                            <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
+                            <td style="border:2px solid #191c24;color:#EBEBB8;"><b id="destination" href = test.html>VaR @ "zero"%</b></td>
+                                                            <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;"> <b id="vars" href = test.html style="float:left;">" expected_var"</b>
+
                             </td>
                           </tr>
                           <tr>
                             <td style="border:2px solid #191c24;color:#055C9D;color:#EBEBB8;"><b>Expected Shortfall</b></td>
-                            <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;">
+                            <td style="border:2px solid #191c24;text-align:right;color:#EBEBB8;padding:0px;"> <b id="snow" href = test.html style="float:left;"> " expected_shortfall"</b>
                             </td>
                           </tr>
                         </table>
@@ -169,31 +173,32 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-5">
                 <div class="row">
                   <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card" style="height:93vh;">
+                    <div class="card" style="height:123vh;">
                       <div class="card-body">
                         <h4 class="card-title text-center">Efficient Frontier Portfolios</h4>
-                        <img src="/../static/files/efp.png" alt="" style="height:500px;width:650px;">
+<!--                        <img src="/../static/files/efp.png" alt="" style="height:500px;width:650px;">-->
+                          <iframe src="/../static/files/efp.html" frameborder="0" scrolling="no" style="height:600px;width:610px;"></iframe>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="card" style="height:45vh;margin-bottom:3vh;">
+              <div class="col-md-4">
+                <div class="card" style="height:75vh;margin-bottom:3vh;">
                   <div class="card-body">
-                    <h4 class="card-title text-center">Allocation</h4>
-                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                    <div id="piechart" style="width: 400px; height: 100px;"></div>
+                    <h4 class="card-title text-center">Value at Risk</h4>
+                      <iframe src="/../static/files/var.html" style="height:500px;width:480px;" scrolling="no" frameborder="0"></iframe>
+<!--                      <iframe src="http://127.0.0.1:8000/static/files/var.html" style="height:200px;width:275px;" scrolling="no" frameborder="0"></iframe>-->
                   </div>
                 </div>
                 <div class="card" style="height:45vh;">
                   <div class="card-body">
-                    <h4 class="card-title text-center">Value at Risk</h4>
-                      <iframe src="/../static/files/var.html" style="height:200px;width:275px;" scrolling="no" frameborder="0"></iframe>
-<!--                      <iframe src="http://127.0.0.1:8000/static/files/var.html" style="height:200px;width:275px;" scrolling="no" frameborder="0"></iframe>-->
+                    <h4 class="card-title text-center">Allocation</h4>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <div id="piechart" style="width: 500px; height: 100px;margin-left:100px;"></div>
                   </div>
                 </div>
               </div>
@@ -214,14 +219,156 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+{% endverbatim %}
 
     <script>
+  var app = angular.module('newApp', []);
+
+  app.controller('newCtrl', function($scope, $http, $rootScope) {
+
+    $scope.getCalc = function(){
+        ci = document.getElementById("ci").value
+        inv = document.getElementById("inv").value
+
+      $http({
+        method: 'GET',
+        url: '/api/varData/?ci=' + ci + '&inv=' + inv
+      }).then(function(response) {
+        console.log(response)
+      })
+    }
+
+        function confidence (){
+            ci = document.getElementById("ci").value
+            inv = document.getElementById("inv").value
+            document.getElementById('perc').InnerHTML = ci
+
+        }
+
+        $scope.putText = function() {
+            var zero = document.getElementById("ci").value;
+            document.getElementById("destination").innerHTML = "VaR @" + zero + "%";
+                        var snow = 43
+
+            document.getElementById("snow").innerHTML = snow
+            var vars = 32
+                        document.getElementById("vars").innerHTML = vars
+
+        }
+
+<!--    function callFunction (){-->
+
+<!--      google.charts.load('current', {'packages':['corechart']});-->
+<!--      google.charts.setOnLoadCallback(draawChart);-->
+
+<!--      function draawChart() {-->
+<!--      var data = new google.visualization.DataTable();-->
+<!--      data.addColumn('string', 'Pizza');-->
+<!--      data.addColumn('number', 'Populartiy');-->
+<!--      data.addRows(-->
+<!--       [['Default', 100]]-->
+<!--      );-->
+
+<!--        var options = {-->
+<!--            backgroundColor: '#191c24',-->
+<!--            'width': 320,-->
+<!--            'height': 250,-->
+<!--            'chartArea': {'width': '100%', 'height': '80%'},-->
+<!--            legend: {textStyle: {color: 'white'}}-->
+<!--        };-->
+
+<!--        var chart = new google.visualization.PieChart(document.getElementById('piechart'));-->
+
+<!--        chart.draw(data, options);-->
+<!--      }-->
+<!--      }-->
+
+<!--callFunction()-->
+
+
+<!--    function myFunction() {-->
+<!--      pieArr = []-->
+<!--      aapl = []-->
+<!--      cvm = []-->
+<!--      fb = []-->
+<!--      tsla = []-->
+<!--      a = document.getElementById("aapl").value-->
+<!--      b = document.getElementById("cvm").value-->
+<!--      c = document.getElementById("fb").value-->
+<!--      d = document.getElementById("ts").value-->
+
+<!--            aapl.push('AAPL')-->
+<!--      aapl.push(parseInt(a))-->
+
+<!--      cvm.push('CVM')-->
+<!--      cvm.push(parseInt(b))-->
+
+<!--      fb.push('FB')-->
+<!--      fb.push(parseInt(c))-->
+
+<!--      tsla.push('TSLA')-->
+<!--      tsla.push(parseInt(d))-->
+
+<!--      pieArr.push(aapl)-->
+<!--      pieArr.push(cvm)-->
+<!--      pieArr.push(fb)-->
+<!--      pieArr.push(tsla)-->
+
+<!--      let sum = 0;-->
+<!--        pieArrTot = []-->
+<!--        for (let i = 0; i < pieArr.length; i++) {-->
+<!--            if (Number.isNaN(pieArr[i][1]) != true){-->
+<!--            console.log('number')-->
+<!--                sum += Number(pieArr[i][1]);-->
+<!--                       console.log(sum)-->
+<!--            }-->
+<!--        pieArrTot.push(i[0])-->
+<!--        pieArrTot.push(i[1])-->
+<!--        }-->
+
+<!--      if (sum == 100){-->
+<!--            console.log(pieArr)-->
+<!--          pieArrTot = pieArr-->
+<!--          google.charts.load('current', {'packages':['corechart']});-->
+<!--          google.charts.setOnLoadCallback(drawChart);-->
+<!--      }-->
+
+<!--&lt;!&ndash;      if (sum < 100) {&ndash;&gt;-->
+<!--&lt;!&ndash;                pieArrTot = pieArr&ndash;&gt;-->
+<!--&lt;!&ndash;                      console.log(pieArrTot)&ndash;&gt;-->
+
+<!--&lt;!&ndash;        google.charts.load('current', {'packages':['corechart']});&ndash;&gt;-->
+<!--&lt;!&ndash;          google.charts.setOnLoadCallback(drawChart);&ndash;&gt;-->
+<!--&lt;!&ndash;      }&ndash;&gt;-->
+
+<!--    }-->
+
+<!--      function drawChart() {-->
+<!--      var data = new google.visualization.DataTable();-->
+<!--      data.addColumn('string', 'Pizza');-->
+<!--      data.addColumn('number', 'Populartiy');-->
+<!--      data.addRows(-->
+<!--       pieArrTot-->
+<!--      );-->
+
+<!--        var options = {-->
+<!--            backgroundColor: '#191c24',-->
+<!--            'width': 320,-->
+<!--            'height': 250,-->
+<!--            'chartArea': {'width': '100%', 'height': '80%'},-->
+<!--            legend: {textStyle: {color: 'white'}}-->
+<!--        };-->
+
+<!--        var chart = new google.visualization.PieChart(document.getElementById('piechart'));-->
+
+<!--        chart.draw(data, options);-->
+<!--      }-->
 
 
     function callFunction (){
 
-              google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(draawChart);
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(draawChart);
 
       function draawChart() {
       var data = new google.visualization.DataTable();
@@ -254,12 +401,18 @@ callFunction()
       cvm = []
       fb = []
       tsla = []
+      utens = []
+      ufives = []
+      uones = []
       a = document.getElementById("aapl").value
       b = document.getElementById("cvm").value
       c = document.getElementById("fb").value
       d = document.getElementById("ts").value
+      e = document.getElementById("uten").value
+      f = document.getElementById("ufive").value
+      g = document.getElementById("uone").value
 
-            aapl.push('AAPL')
+      aapl.push('AAPL')
       aapl.push(parseInt(a))
 
       cvm.push('CVM')
@@ -271,37 +424,39 @@ callFunction()
       tsla.push('TSLA')
       tsla.push(parseInt(d))
 
+      utens.push('US10Y')
+      utens.push(parseInt(e))
+
+      ufives.push('US5Y')
+      ufives.push(parseInt(f))
+
+      uones.push('US1Y')
+      uones.push(parseInt(g))
+
       pieArr.push(aapl)
       pieArr.push(cvm)
       pieArr.push(fb)
       pieArr.push(tsla)
+      pieArr.push(utens)
+      pieArr.push(ufives)
+      pieArr.push(uones)
 
+      console.log(pieArr)
 
       let sum = 0;
-        pieArrTot = []
+
         for (let i = 0; i < pieArr.length; i++) {
+            console.log(pieArr[i][1])
             if (Number.isNaN(pieArr[i][1]) != true){
-            console.log('number')
                 sum += Number(pieArr[i][1]);
                        console.log(sum)
             }
-        pieArrTot.push(i[0])
-        pieArrTot.push(i[1])
         }
-
-      if (sum == 100){
-            console.log(pieArr)
-          pieArrTot = pieArr
+                           console.log('dsffsfsd', sum)
+      if (sum){
           google.charts.load('current', {'packages':['corechart']});
           google.charts.setOnLoadCallback(drawChart);
-      } if (sum < 100) {
-                pieArrTot = pieArr
-                      console.log(pieArrTot)
-
-        google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart);
       }
-
     }
 
       function drawChart() {
@@ -309,7 +464,7 @@ callFunction()
       data.addColumn('string', 'Pizza');
       data.addColumn('number', 'Populartiy');
       data.addRows(
-       pieArrTot
+       pieArr
       );
 
         var options = {
@@ -324,6 +479,8 @@ callFunction()
 
         chart.draw(data, options);
       }
+
+})
     </script>
 
   </body>

@@ -1,0 +1,15 @@
+<html>
+<head>
+<script>
+    function putText() {
+        var simpleText = "hello_world";
+        var finalSplitText = simpleText.split("_");
+        var splitText = finalSplitText[0];
+        document.getElementById("destination").innerHTML = "I need the value of " + splitText + " variable here";
+    }
+</script>
+</head>
+<body onLoad = putText()>
+    <a id="destination" href = test.html>I need the value of "splitText" variable here</a>
+</body>
+</html>
